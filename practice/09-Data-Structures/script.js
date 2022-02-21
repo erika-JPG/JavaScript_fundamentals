@@ -112,16 +112,18 @@ console.log('');
 console.log('');
 
 // CHALLENGE 2
-// 1.-
-console.log(`***Challenge 1***`);
+/*1.- Loop over the game.scored array and print each player name to the console,
+along with the goal number (Example: "Goal 1: Lewandowski")*/
+console.log(`***Challenge 2 Part 1***`);
 const goalsScored = Object.entries(game.scored);
 
 for (const [index, name] of goalsScored.entries()) {
   console.log(`Goal ${index + 1}, scored by ${name[1]}`);
 }
 
-// 2.-
-console.log(`***Challenge 2***`);
+/*2.- Use a loop to calculate the average odd and log it to the console (We already
+studied how to calculate averages, you can go check if you don't remember)*/
+console.log(`***Challenge 2 Part 2***`);
 const values = Object.values(game.odds);
 
 let data = 0;
@@ -131,12 +133,20 @@ for (let x of values) {
 average = data / values.length;
 console.log(`Game average is ${average}`);
 
-// 3.-
-console.log(`***Challenge 3***`);
+/* 3.- Print the 3 odds to the console, but in a nice formatted way, exactly like this:
+Odd of victory Bayern Munich: 1.33
+Odd of draw: 3.25
+Odd of victory Borrussia Dortmund: 6.5
+Get the team names directly from the game object, don't hardcode them
+(except for "draw"). Hint: Note how the odds and the game objects have the
+same property names 😉 */
+console.log(`***Challenge 2 Part 3***`);
 console.log(game.odds.x);
-console.log(game.team1);
+console.log(game);
 
 const teamOdds = [game.team1, 'odds', game.team2];
+console.log(teamOdds);
+
 const x = Object.entries(game.odds);
 console.log(x);
 
@@ -146,7 +156,17 @@ for (const [team, odds] of x) {
   console.log(`Odd of ${teamStr} ${odds}`);
 }
 
-// 7.-
+/* 4. Bonus: Create an object called 'scorers' which contains the names of the
+players who scored as properties, and the number of goals as the value. In this
+game, it will look like this:
+{
+Gnarby: 1,
+Hummels: 1,
+Lewandowski: 2
+} */
+console.log('');
+console.log('');
+console.log(`***Challenge 2 Part 4***`);
 
 let scorers = {}; /* We start by creating an empty object*/
 for (const player of game.scored) {
