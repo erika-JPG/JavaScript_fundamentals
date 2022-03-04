@@ -176,3 +176,76 @@ for (const player of game.scored) {
 }
 
 console.log(scorers);
+
+//Challenge #3
+console.log('');
+console.log('//////////////////////////');
+console.warn('***Challenge 3 Part 1***');
+const gameEvents = new Map([
+  [17, '⚽ GOAL'],
+  [36, '🔁 Substitution'],
+  [47, '⚽ GOAL'],
+  [61, '🔁 Substitution'],
+  [64, '🔶 Yellow card'],
+  [69, '🔴 Red card'],
+  [70, '🔁 Substitution'],
+  [72, '🔁 Substitution'],
+  [76, '⚽ GOAL'],
+  [80, '⚽ GOAL'],
+  [92, '🔶 Yellow card'],
+]);
+
+/*1. Create an array 'events' of the different game events that happened (no
+duplicates) */
+/* The values that we need to have in the array are the 'values' of each key (entry). We use .values() to select all the values in the map, turn that into a new set and use the spread operator to push every entry into an array */
+console.log('Logging just the values of the map: ');
+const a = gameEvents.values();
+console.log(a);
+
+console.log('Turnng those values into a set:');
+const b = new Set(gameEvents.values());
+console.log(b);
+
+console.log('Storing each value into an array:');
+const events = [...new Set(gameEvents.values())];
+console.log(events);
+console.log('');
+
+console.warn('***Challenge 3 Part 2***');
+/*2. After the game has finished, is was found that the yellow card from minute 64
+was unfair. So remove this event from the game events log.*/
+
+const no64 = gameEvents.has(64) ? gameEvents.delete(64) : false;
+console.log(gameEvents);
+
+console.warn('***Challenge 3 Part 3***');
+/*3. Compute and log the following string to the console: "An event happened, on
+average, every 9 minutes" (keep in mind that a game has 90 minutes) */
+
+/* using the spread operator to store the keys in an array and using the .pop() method to retrieve the last value of the array whis is the real duration of the game */
+const time = [...gameEvents.keys()].pop();
+console.log(time);
+const averageMins = time / gameEvents.size;
+
+console.log(`An event happened, on average, every ${averageMins} minutes`);
+
+console.warn('***Challenge 3 Part 4***');
+/*4. Loop over 'gameEvents' and log each element to the console, marking
+whether it's in the first half or second half (after 45 min) of the game, like this:
+[FIRST HALF] 17:⚽ GOAL */
+
+for (const [key, value] of gameEvents) {
+  if (key < 45) {
+    console.log(`[FIRST HALF] ${key}: ${value}`);
+  } else {
+    console.log(`[SECOND HALF] ${key}: ${value}`);
+  }
+}
+
+console.log('');
+console.log('Using the ternary operator to achieve the same result');
+
+for (const [minute, event] of gameEvents) {
+  const half = minute <= 45 ? 'FIRST' : 'SECOND';
+  console.log(`[${half} HALF] ${minute}: ${event}`);
+}
