@@ -1,0 +1,16 @@
+.app,
+.comp {
+  align-items: center;
+  display: flex;
+  font-weight: bolder;
+  height: 50px !important;
+  justify-content: center;
+  width: 100%;
+}
+#cs {
+  display: none;
+}
+.img {
+  width: 250px;
+  height: auto;
+}
