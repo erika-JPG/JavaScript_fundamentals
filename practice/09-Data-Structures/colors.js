@@ -4,33 +4,15 @@
  * @return {String} A random six-digit color hexcode
  */
 // Set the color/BG color
-let app = document.querySelector('#app');
-let image = document.querySelector('#myimg');
-let getImage = document.querySelector('#getImage');
-let comp1 = document.querySelector('#comp1');
-let comp2 = document.querySelector('#comp2');
-let comp3 = document.querySelector('#comp3');
-
+const app = document.querySelector('#app');
+const image = document.querySelector('#myimg');
+const getImage = document.querySelector('#getImage');
+const comp1 = document.querySelector('#comp1');
+const comp2 = document.querySelector('#comp2');
+const comp3 = document.querySelector('#comp3');
+const colorbtn = document.querySelector('#getColor');
+const rColor = document.querySelector('#randomColor');
 let bgColor = createColor();
-let compColor1 = hexToComplimentary(bgColor, 180);
-let compColor2 = hexToComplimentary(bgColor, 60);
-let compColor3 = hexToComplimentary(bgColor, 30);
-
-app.textContent = bgColor;
-comp1.textContent = compColor1;
-comp2.textContent = compColor2;
-comp3.textContent = compColor3;
-
-app.style.backgroundColor = bgColor;
-app.style.color = getContrast(bgColor);
-comp1.style.backgroundColor = compColor1;
-comp1.style.color = getContrast(compColor1);
-
-comp2.style.backgroundColor = compColor2;
-comp2.style.color = getContrast(compColor2);
-
-comp3.style.backgroundColor = compColor3;
-comp3.style.color = getContrast(compColor3);
 
 function createColor() {
   // The available hex options
@@ -124,7 +106,6 @@ function getContrast(hexcolor) {
 
   // Get YIQ ratio
   let yiq = (r * 299 + g * 587 + b * 114) / 1000;
-  console.log(yiq);
 
   // Check contrast
   return yiq >= 128 ? 'black' : 'white';
@@ -241,15 +222,11 @@ function getBase64FromImageUrl(url) {
 
     encoded = dataURL.replace(/^data:image\/(png|jpg);base64,/, '');
     image.src = dataURL;
-    console.log(encoded);
     return encoded;
   };
   img.src = url;
-  console.log(url);
 }
-/*getBase64FromImageUrl(
-  'https://s3.amazonaws.com/subscribe-funnels-production/assets/4c4995a3-67dd-4a68-a71d-af5131b22d64/features.jpg'
-);*/
+
 getImage.addEventListener('click', function () {
   let theUrl = document.getElementById('iurl').value;
   getBase64FromImageUrl(theUrl);
@@ -365,30 +342,39 @@ function findPos(obj) {
   return undefined;
 }
 
-/*let pickedcolor = '#ffffff';
-if (pickedcolor) {
-  bgColor = pickedcolor;
-} else {
-  console.log('nah');
-}
+const updateColors = function (color) {
+  let compColor1 = hexToComplimentary(color, 180);
+  let compColor2 = hexToComplimentary(color, 60);
+  let compColor3 = hexToComplimentary(color, 30);
+  app.textContent = color;
+  comp1.textContent = compColor1;
+  comp2.textContent = compColor2;
+  comp3.textContent = compColor3;
 
-let compColor1 = hexToComplimentary(bgColor, 180);
-let compColor2 = hexToComplimentary(bgColor, 60);
-let compColor3 = hexToComplimentary(bgColor, 30);
+  app.style.backgroundColor = color;
+  app.style.color = getContrast(color);
+  comp1.style.backgroundColor = compColor1;
+  comp1.style.color = getContrast(compColor1);
 
-app.textContent = bgColor;
-comp1.textContent = compColor1;
-comp2.textContent = compColor2;
-comp3.textContent = compColor3;
+  comp2.style.backgroundColor = compColor2;
+  comp2.style.color = getContrast(compColor2);
 
-app.style.backgroundColor = bgColor;
-app.style.color = getContrast(bgColor);
-comp1.style.backgroundColor = compColor1;
-comp1.style.color = getContrast(compColor1);
+  comp3.style.backgroundColor = compColor3;
+  comp3.style.color = getContrast(compColor3);
+};
 
-comp2.style.backgroundColor = compColor2;
-comp2.style.color = getContrast(compColor2);
+colorbtn.addEventListener('click', function () {
+  let newColor = document.getElementById('icolor').value;
+  if (!newColor) {
+    alert('insert hex color!');
+  } else {
+    updateColors(newColor);
+  }
+});
 
-comp3.style.backgroundColor = compColor3;
-comp3.style.color = getContrast(compColor3);
-*/
+rColor.addEventListener('click', function () {
+  let newColor = createColor();
+  updateColors(newColor);
+});
+
+window.onload = updateColors(bgColor);
