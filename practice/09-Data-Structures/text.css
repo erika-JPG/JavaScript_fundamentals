@@ -1,8 +1,0 @@
-:root {
-  --color: #990000;
-}
-
-body {
-  color: color-mod(var(--color) tint(59%));
-  color: ;
-}
