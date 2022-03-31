@@ -423,3 +423,12 @@ console.log(question.get(question.get('correct') === answer));
 
 // Converting a MAP back to an arraay
 console.log([...question]);
+
+// function that convers any string to first letter uppercase and rest lowercase
+const capitalized = function (string) {
+  const lowerCase = string.toLowerCase();
+  const caps = lowerCase[0].toUpperCase() + lowerCase.slice(1);
+  console.log(caps);
+};
+
+capitalized('MyUNIvErSe');
