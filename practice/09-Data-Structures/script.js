@@ -249,3 +249,28 @@ for (const [minute, event] of gameEvents) {
   const half = minute <= 45 ? 'FIRST' : 'SECOND';
   console.log(`[${half} HALF] ${minute}: ${event}`);
 }
+
+console.warn('*** Challenge 4 - String Methods ***');
+document.body.append(document.createElement('textarea'));
+document.body.append(document.createElement('button'));
+
+const button = document.querySelector('button');
+
+const camelCase = function () {
+  const text = document.querySelector('textarea').value;
+  let words = text.split('\n');
+  console.log(words);
+
+  let singles = [];
+  words.forEach(el => singles.push(el.replace('_', ' ')));
+  console.log(singles);
+
+  for (i = 0; i < singles.length; i++) {
+    let ww = singles[i].split(' ');
+    console.log(ww);
+
+    ww.forEach(el => console.log(el));
+  }
+};
+
+button.addEventListener('click', camelCase);
