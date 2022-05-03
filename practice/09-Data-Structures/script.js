@@ -251,6 +251,13 @@ for (const [minute, event] of gameEvents) {
 }
 
 console.warn('*** Challenge 4 - String Methods ***');
+/*
+underscore_case
+ first_name
+Some_Variable
+  calculate_AGE
+delayed_departure
+*/
 document.body.append(document.createElement('textarea'));
 document.body.append(document.createElement('button'));
 
@@ -259,7 +266,6 @@ const button = document.querySelector('button');
 const camelCase = function () {
   const text = document.querySelector('textarea').value;
   let words = text.split('\n');
-  console.log(words);
 
   let singles = [];
   words.forEach(el => singles.push(el.replace('_', ' ')));
