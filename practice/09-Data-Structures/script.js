@@ -264,19 +264,40 @@ document.body.append(document.createElement('button'));
 const button = document.querySelector('button');
 
 const camelCase = function () {
-  const text = document.querySelector('textarea').value;
-  let words = text.split('\n');
+  /*const text = document.querySelector('textarea').value;*/
+  const text = `underscore_case
+  first_name
+ Some_Variable
+   calculate_AGE
+ delayed_departure`;
 
-  let singles = [];
-  words.forEach(el => singles.push(el.replace('_', ' ')));
-  console.log(singles);
+  let words = text.split(' ');
+  // console.log(words);
+  let underscores = [];
 
-  for (i = 0; i < singles.length; i++) {
-    let ww = singles[i].split(' ');
-    console.log(ww);
+  words.forEach(e => {
+    if (e.includes('_')) {
+      underscores.push(e);
+    }
+  });
+  // console.log(underscores);
 
-    ww.forEach(el => console.log(el));
-  }
+  lowercase = [];
+
+  underscores.forEach(e => {
+    lowercase.push(e.toLowerCase());
+  });
+  console.log(lowercase);
+
+  caps = [];
+  lowercase.forEach(e => {
+    uu = e.indexOf('_') + 1;
+
+    console.log(uu);
+    caps.push(e.replace(e[uu], e[uu].toUpperCase()));
+  });
+  console.log(caps);
 };
 
-button.addEventListener('click', camelCase);
+camelCase();
+/*button.addEventListener('click', camelCase);*/
