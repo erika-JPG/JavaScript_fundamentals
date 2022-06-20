@@ -264,40 +264,27 @@ document.body.append(document.createElement('button'));
 const button = document.querySelector('button');
 
 const camelCase = function () {
-  /*const text = document.querySelector('textarea').value;*/
-  const text = `underscore_case
-  first_name
- Some_Variable
-   calculate_AGE
- delayed_departure`;
+  const text = document.querySelector('textarea').value;
+  const lowercase = text.toLowerCase();
+  const myarray = lowercase.split('\n');
+  let check = '✅';
 
-  let words = text.split(' ');
-  // console.log(words);
-  let underscores = [];
+  const noSpaces = [];
+  for (const word of myarray) {
+    noSpaces.push(word.trim());
+  }
 
-  words.forEach(e => {
-    if (e.includes('_')) {
-      underscores.push(e);
-    }
-  });
-  // console.log(underscores);
+  for (i = 0; i < noSpaces.length; i++) {
+    let underscore = noSpaces[i].indexOf('_');
+    let upper = noSpaces[i][underscore + 1].toUpperCase();
+    let a =
+      noSpaces[i].slice(0, underscore) +
+      upper +
+      noSpaces[i].slice(underscore + 2);
 
-  lowercase = [];
-
-  underscores.forEach(e => {
-    lowercase.push(e.toLowerCase());
-  });
-  console.log(lowercase);
-
-  caps = [];
-  lowercase.forEach(e => {
-    uu = e.indexOf('_') + 1;
-
-    console.log(uu);
-    caps.push(e.replace(e[uu], e[uu].toUpperCase()));
-  });
-  console.log(caps);
+    let extended = a.padEnd(20) + check;
+    check = check + '✅';
+    console.log(extended);
+  }
 };
-
-camelCase();
-/*button.addEventListener('click', camelCase);*/
+button.addEventListener('click', camelCase);
