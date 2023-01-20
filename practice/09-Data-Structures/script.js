@@ -264,27 +264,59 @@ document.body.append(document.createElement('button'));
 const button = document.querySelector('button');
 
 const camelCase = function () {
+  // Selecting the text from the text area
   const text = document.querySelector('textarea').value;
+  // Turning the entire string to lowercase
   const lowercase = text.toLowerCase();
+  // Separating lowercase str by each return and storing it in a new array. .split() returns a new array
   const myarray = lowercase.split('\n');
+  // the emoji that we use at the end
   let check = '✅';
 
+  // Creating a new empty array to store edited words from myarray[]
   const noSpaces = [];
+  // Removing the extra spaces at the end of each word in myarray[]
   for (const word of myarray) {
     noSpaces.push(word.trim());
   }
 
+  // We loop through the array noSpaces[] which has on each index a lowercase word
   for (i = 0; i < noSpaces.length; i++) {
+    // getting the index of underscore on each word
     let underscore = noSpaces[i].indexOf('_');
+    // turning the letter after each underscore index to an uppercase and storing the new value in a new variable.
     let upper = noSpaces[i][underscore + 1].toUpperCase();
+    // Splittig each word until the underscore, joining with the uppercase letter and the rest of the word.
     let a =
       noSpaces[i].slice(0, underscore) +
       upper +
       noSpaces[i].slice(underscore + 2);
 
+    // creating a list of checkmars to be added at the end of each word. At the end of the loop we increase the chekmark list by one so the next word contains one extra checkmark.
     let extended = a.padEnd(20) + check;
     check = check + '✅';
+    // logging the edited text to the console.
     console.log(extended);
   }
 };
 button.addEventListener('click', camelCase);
+
+//**************************JONAS SOLUTION************************************ */
+
+// Attaching an event handler to the button
+document.querySelector('button').addEventListener('click', function () {
+  // Selecting the text from the textarea
+  const text = document.querySelector('textarea').value;
+  // spliting the text into rows
+  const rows = text.split('\n');
+  // looping through each row using a for of loop. Since we are using the index of each row to echo the number of checkmarks. We use the method .entries() which exposes the index of each entry then we destructure into two variables, one for the index and the second for each row of words.
+  for (const [i, row] of rows.entries()) {
+    // Since we can chain different methods for a string we turn each word into a lowercase, trim the empty spaces and splitting each word by its underscore.
+    //Because split() we end up witht two values which we can destructure into two variables.
+    const [first, second] = row.toLowerCase().trim().split('_');
+
+    //Building the output
+    const output = `${first}${(second.replace[0], second[0].toUpperCase())}`;
+    console.log(`${output.padEnd(20, ' ')}${'✅'.repeat(i + 1)} `);
+  }
+});
