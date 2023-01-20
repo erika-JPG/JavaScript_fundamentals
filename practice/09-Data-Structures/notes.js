@@ -432,3 +432,18 @@ const capitalized = function (string) {
 };
 
 capitalized('MyUNIvErSe');
+
+// Functions that return other functions, they all are the same but using dfifferent syntax.
+
+const greet0 = function (greeting) {
+  return function (name) {
+    console.log(`${greeting} ${name}`);
+  };
+};
+
+const greet = greeting =>
+  function (name) {
+    console.log(`${greeting} ${name}`);
+  };
+
+const greet2 = greeting => name => console.log(`${greeting} ${name}`);
