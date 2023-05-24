@@ -73,6 +73,6 @@ document
   .addEventListener('click', poll.registerNewAnswer.bind(poll));
 
 /*
-  Bonus part: in order to change the answers that the function will work with, we need to create an object that would replace the THIS keyword from the original function parameters. We use call() because this methos allows us to set the THIS value manually, as opposed to .bind() that returns a function with the new THIS keyword value.  
+  Bonus part: in order to change the answers that the function will work with, we need to create an object that would replace the THIS keyword from the original function parameters. We use call() because this method allows us to set the THIS value manually, as opposed to .bind() that returns a function with the new THIS keyword value.  
   */
 poll.displayResults.call({ answers: [5, 2, 3] }, 'string');
