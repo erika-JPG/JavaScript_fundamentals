@@ -76,3 +76,29 @@ document
   Bonus part: in order to change the answers that the function will work with, we need to create an object that would replace the THIS keyword from the original function parameters. We use call() because this method allows us to set the THIS value manually, as opposed to .bind() that returns a function with the new THIS keyword value.  
   */
 poll.displayResults.call({ answers: [5, 2, 3] }, 'string');
+
+/*
+Coding Challenge #2
+This is more of a thinking challenge than a coding challenge 🤓
+Your tasks:
+1. Take the IIFE below and at the end of the function, attach an event listener that
+changes the color of the selected h1 element ('header') to blue, each time
+the body element is clicked. Do not select the h1 element again!
+2. And now explain to yourself (or someone around you) why this worked! Take all
+the time you need. Think about when exactly the callback function is
+*/
+
+(function () { 
+  const header = document.querySelector('h1');
+  header.style.color = 'red'; 
+
+  document.querySelector('body').addEventListener('click', function () { 
+    header.style.color = 'blue';
+  })
+})();
+
+/*
+  why does this work?
+
+  Due to Closures. The closure is useful because by the time the callback is executed, the IFEI function is gone. But since the callback is defined in the IFEE it still has access to the variables and can change the header color.
+*/
