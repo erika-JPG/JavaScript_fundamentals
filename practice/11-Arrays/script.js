@@ -77,7 +77,85 @@ const displayMovements = function (movements) {
   })
 
 }
-displayMovements(account1.movements)
+displayMovements(account1.movements);
+
+
+const calcDisplayBalance = function (movements) { 
+  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${balance} €`;
+}
+calcDisplayBalance(account1.movements)
+
+const calcDisplaySummary = function (acc) { 
+  const incomes = acc.movements
+    .filter(mov => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumIn.textContent = `${incomes}€`;
+
+  const out = acc.movements
+    .filter(mov => mov < 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumOut.textContent = `${Math.abs(out)}€`;
+
+  const interest = acc.movements
+    .filter(mov => mov > 0)
+    .map(deposit => deposit * (acc.interestRate / 100))
+    .filter(int => int >= 1)
+    .reduce((count, interest) => count + interest, 0)
+  labelSumInterest.textContent = `${interest}€`;
+}
+
+
+//Using a Map to loop through an array of objects. 
+const createUsernames = function (accounts) { 
+  accounts.forEach(function (acc) {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(name => name[0]).join('');
+  });
+} 
+createUsernames(accounts);
+
+// Event handler
+let currentAccount;
+
+btnLogin.addEventListener('click', function (e) {
+  //Preventing submitting the form
+  e.preventDefault();
+
+  currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value
+  );
+
+  console.log(currentAccount)
+  if (currentAccount?.pin === Number(inputLoginPin.value)) { 
+    // Display welcome message
+    labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}`;
+    containerApp.style.opacity = 100;
+
+    // Clear inpur fields
+    inputLoginUsername.value = inputLoginPin.value = '';
+    inputLoginPin.blur();
+    
+    // Display Movements
+    displayMovements(currentAccount.movements);
+
+    // Display Balance
+    calcDisplayBalance(currentAccount.movements);
+
+    //Display Summary
+    calcDisplaySummary(currentAccount);
+  }
+
+})
+
+
+
+
+
+
+
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -89,9 +167,48 @@ displayMovements(account1.movements)
 //   ['GBP', 'Pound sterling'],
 // ]);
 
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 ///////////////////////////////////////////////// 
+
+//Using filter
+const deposits = movements.filter(function (mov) { 
+  return mov > 0
+
+})
+console.log(deposits)
+
+//Using a for of
+const depositsFor =[]
+for (const mov of movements) if (mov > 0) depositsFor.push(mov)
+console.log(deposits)
+
+//Mini challenge: creating an arraw of withrawals
+const withrawals = movements.filter( mov => mov < 0 );
+console.log(withrawals);
+
+
+//Using the reduce method
+// const balance = movements.reduce((function (acc, curr, i, arr) { 
+//   console.log(`iteration number ${i}: Accumulator(${acc}) + Movement(${curr})`)
+//   return acc + curr;
+
+// }), 0);
+const balance = movements.reduce((acc,curr,i) => acc +curr, 0) 
+console.log('.reduce(()=> (condition), 0) Balance ' + balance);
+
+
+    //Using for of
+let balance2 = 0;
+for (const mov of movements) balance2 += mov;
+console.log('For of Balance: ' + balance2)
+
+// Getting the maximum value
+const max = movements.reduce((acc, mov) => mov > acc ? mov : acc, 0);
+console.log(`Max deposit in movements array: ${max}`);
+
+
+
 
 /*******************
  * 
@@ -122,6 +239,10 @@ const kate2 = [10, 5, 6, 1, 4];
 
 const checkDogs = function (dogsJulia, dogsKate) { 
   const corrected = dogsJulia.slice(1, -2);
+  //creating a shallow copy:
+  /*const corrected2 = dogsJulias.slice();
+  corrected2.splice(0, 1);
+  corrected2.splice(-2);*/
   const dogs = [...corrected, ...dogsKate];
   console.log(dogs);
   dogs.forEach((e,i) => { 
@@ -134,3 +255,97 @@ const checkDogs = function (dogsJulia, dogsKate) {
 
 checkDogs(julia1, kate1);
 checkDogs(julia2, kate2);
+
+
+/*******************
+ * 
+ * CODING CHALLENGE #2
+ * 
+ ******************/
+/*
+Let's go back to Julia and Kate's study about dogs. This time, they want to convert
+dog ages to human ages and calculate the average age of the dogs in their study.
+Your tasks:
+Create a function 'calcAverageHumanAge', which accepts an arrays of dog's
+ages ('ages'), and does the following things in order:
+1. Calculate the dog age in human years using the following formula: if the dog is
+<= 2 years old, humanAge = 2 * dogAge. If the dog is > 2 years old,
+humanAge = 16 + dogAge * 4
+2. Exclude all dogs that are less than 18 human years old (which is the same as
+keeping dogs that are at least 18 years old)
+3. Calculate the average human age of all adult dogs (you should already know
+from other challenges how we calculate averages 😉)
+4. Run the function for both test datasets
+Test data:
+§Data 1: [5, 2, 4, 1, 15, 8, 3]
+§Data 2: [16, 6, 10, 5, 6, 1, 4]
+GOOD LUCK 😀
+*/
+const data1 = [5, 2, 4, 1, 15, 8, 3],
+  data2 = [16, 6, 10, 5, 6, 1, 4];
+
+const calcAverageHumanAge = function (ages) { 
+  const humanYears = ages.map(e => { 
+    return e <= 2 ? e * 2 : 16 + e * 4;
+  })
+  // console.log(humanYears)
+
+  const filtered = humanYears.filter(e => { 
+    return e >= 18;
+  }) 
+  // console.log(filtered)
+
+  const averageAges = filtered.reduce((acc, age, i, arr) => acc + age / arr.length, 0);
+  console.log(averageAges.toFixed(2));
+}
+
+
+calcAverageHumanAge(data1);
+calcAverageHumanAge(data2)
+
+
+/*******************
+ * 
+ * CODING CHALLENGE #3
+ * 
+ ******************/
+/*
+Rewrite the 'calcAverageHumanAge' function from Challenge #2, but this time
+as an arrow function, and using chaining!
+Test data:
+§Data 1: [5, 2, 4, 1, 15, 8, 3]
+§Data 2: [16, 6, 10, 5, 6, 1, 4]
+*/
+
+
+const calcAverageHumanAge2 = (ages) => { 
+  const humanYears = ages.map(e => { 
+    return e <= 2 ? e * 2 : 16 + e * 4;
+  }).filter(e => {
+    return e >= 18;
+  }).reduce((acc, age, i, arr) => acc + age / arr.length, 0)
+  
+  console.log(humanYears.toFixed(2));
+} 
+
+const calcAverageHumanAgeJonas = ages =>
+  ages
+    .map(e => (e <= 2 ? e * 2 : 16 + e * 4))
+    .filter(e => e >= 18).reduce((acc, age, i, arr) => acc + age / arr.length, 0);
+  
+
+calcAverageHumanAge2(data1);
+calcAverageHumanAge2(data2);
+
+
+// The FIND method
+const account = accounts.find(acc => acc.owner === 'Jessica Davis');
+console.log(account);
+//Using a for of loop:
+let acct = {};
+for (const acc of accounts) { 
+  if (acc.owner === 'Jessica Davis') {
+    acct = acc;
+  } 
+} 
+console.log(acct);
