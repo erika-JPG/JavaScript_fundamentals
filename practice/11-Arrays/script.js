@@ -419,3 +419,14 @@ for (const acc of accounts) {
   } 
 } 
 console.log(acct);
+
+//////////////////////////////
+// Array Methods Practice
+
+// #1 Extracting all values of arrays to one
+const bankDepositSum = accounts.flatMap(acc => acc.movements).filter(mov => mov > 0).reduce((sum, cur) => sum + cur, 0);
+console.log(bankDepositSum);
+
+// #2 Count how many deposits are over 1000
+const numDeposits = accounts.flatMap(acc => acc.movements).filter(mov => mov > 1000).length;
+console.log(numDeposits)
